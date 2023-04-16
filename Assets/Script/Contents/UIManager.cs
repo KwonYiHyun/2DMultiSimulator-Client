@@ -23,8 +23,8 @@ public class UIManager : MonoBehaviour
     public void SendTo()
     {
         PositionInfo pos = new PositionInfo();
-        pos.posX = int.Parse(input_posX.text);
-        pos.posY = int.Parse(input_posY.text);
+        pos.posX = float.Parse(input_posX.text);
+        pos.posY = float.Parse(input_posY.text);
 
         C_Move movePacket = new C_Move();
         movePacket.positionInfo = pos;
@@ -32,8 +32,8 @@ public class UIManager : MonoBehaviour
 
         NetworkManager.Instance.Send(movePacket.Serialize());
 
-        GameObject player = GameObject.Find("MyPlayer(Clone)");
-        // player.transform.position = Vector2.MoveTowards(player.transform.position, new Vector2(pos.posX, pos.posY), 10 * Time.deltaTime);
-        player.transform.position = Vector2.Lerp(player.transform.position, new Vector2(pos.posX, pos.posY), Time.deltaTime);
+        // GameObject player = GameObject.Find("MyPlayer(Clone)");
+
+        // player.GetComponent<Player>().des = new Vector2(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
     }
 }

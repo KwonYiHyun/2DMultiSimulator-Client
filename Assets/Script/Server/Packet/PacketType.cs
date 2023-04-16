@@ -18,6 +18,8 @@ public enum PacketType
 	S_Despawn,
 	S_Move,
 	C_Move,
+	S_Hit,
+	C_Hit,
 	PositionInfo,
 	ObjectInfo,
 	

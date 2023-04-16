@@ -34,6 +34,7 @@ public class ObjectManager
 
 				GameObject go = GameObject.Instantiate(NetworkManager.Instance.myPlayer);
 				go.transform.position = Vector3.zero;
+				_objects.Add(info.objectId, go);
 			}
 			else
 			{
@@ -49,7 +50,9 @@ public class ObjectManager
 				*/
 
 				GameObject go = GameObject.Instantiate(NetworkManager.Instance.otherPlayer);
-				go.transform.position = Vector3.zero;
+				go.transform.position = new Vector2(info.positionInfo.posX, info.positionInfo.posY);
+				go.GetComponent<Player>().des = new Vector2(info.positionInfo.posX, info.positionInfo.posY);
+				_objects.Add(info.objectId, go);
 			}
 		}
 		else if (objectType == GameObjectType.Monster)
@@ -58,7 +61,9 @@ public class ObjectManager
 		}
 		else if (objectType == GameObjectType.Projectile)
 		{
-			
+			GameObject go = GameObject.Instantiate(NetworkManager.Instance.projectile);
+			go.transform.position = new Vector2(info.positionInfo.posX, info.positionInfo.posY);
+			_objects.Add(info.objectId, go);
 		}
 	}
 

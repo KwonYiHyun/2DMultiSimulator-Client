@@ -13,6 +13,7 @@ public class NetworkManager : MonoBehaviour
 
     public GameObject myPlayer;
     public GameObject otherPlayer;
+    public GameObject projectile;
 
     public ObjectManager objManager = new ObjectManager();
 
@@ -61,5 +62,10 @@ public class NetworkManager : MonoBehaviour
         await connector.ConnectAsync();
 
         SceneManager.LoadScene(1);
+    }
+
+    public void OnHit()
+    {
+        Debug.Log("Hit");
     }
 }

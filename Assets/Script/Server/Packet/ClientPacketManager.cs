@@ -35,6 +35,9 @@ public class PacketManager
 		action.Add(PacketType.S_Move, packetHandler.S_MoveAction);
         packetTypes.Add(PacketType.S_Move, MakePacket<S_Move>);
 
+		action.Add(PacketType.S_Hit, packetHandler.S_HitAction);
+        packetTypes.Add(PacketType.S_Hit, MakePacket<S_Hit>);
+
 		
     }
 

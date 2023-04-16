@@ -50,6 +50,20 @@ public class PacketHandler
 		if (go == null)
 			return;
 
+		go.GetComponent<Player>().des = new Vector2(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
 		// go.transform.position = new Vector3(movePacket.positionInfo.posX, movePacket.positionInfo.posY, 0);
+	}
+
+	public void S_HitAction(Session session, IPacket packet)
+	{
+		NetworkManager.Instance.OnHit();
+
+		S_Hit hitPacket = packet as S_Hit;
+
+		GameObject go = NetworkManager.Instance.objManager.FindById(hitPacket.objectInfo.objectId);
+		if (go == null)
+			return;
+
+		NetworkManager.Instance.OnHit();
 	}
 }
