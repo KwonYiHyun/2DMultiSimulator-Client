@@ -17,6 +17,8 @@ public class NetworkManager : MonoBehaviour
 
     public ObjectManager objManager = new ObjectManager();
 
+    public int ssec = 0, esec = 0, dsec = 0;
+
     private void Awake()
     {
         if(_instance == null){
@@ -67,5 +69,15 @@ public class NetworkManager : MonoBehaviour
     public void OnHit()
     {
         Debug.Log("Hit");
+    }
+
+    public int sNow()
+    {
+        return ssec = int.Parse(DateTime.Now.ToString("fff"));
+    }
+
+    public int eNow()
+    {
+        return esec = int.Parse(DateTime.Now.ToString("fff"));
     }
 }

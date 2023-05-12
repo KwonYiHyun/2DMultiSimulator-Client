@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,8 @@ public class UIManager : MonoBehaviour
     public TMP_InputField input_posY;
     public TMP_InputField input_speed;
 
+    public TMP_Text frame;
+
     void Start()
     {
         
@@ -17,23 +20,66 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        
+        frame.SetText(NetworkManager.Instance.dsec + "");
     }
 
     public void SendTo()
     {
-        PositionInfo pos = new PositionInfo();
-        pos.posX = float.Parse(input_posX.text);
-        pos.posY = float.Parse(input_posY.text);
+        //PositionInfo pos = new PositionInfo();
+        //pos.posX = float.Parse(input_posX.text);
+        //pos.posY = float.Parse(input_posY.text);
 
-        C_Move movePacket = new C_Move();
-        movePacket.positionInfo = pos;
-        movePacket.speed = float.Parse(input_speed.text);
+        //C_Move movePacket = new C_Move();
+        //movePacket.positionInfo = pos;
+        //movePacket.speed = float.Parse(input_speed.text);
 
-        NetworkManager.Instance.Send(movePacket.Serialize());
-
-        // GameObject player = GameObject.Find("MyPlayer(Clone)");
+        //NetworkManager.Instance.Send(movePacket.Serialize());
+        //NetworkManager.Instance.sNow();
 
         // player.GetComponent<Player>().des = new Vector2(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
+
+        StartCoroutine("Send");
+    }
+
+    IEnumerator Send()
+    {
+        while (true)
+        {
+            System.Random rand = new System.Random();
+
+            double minX = -16;
+            double maxX = 16;
+            double minY = -8;
+            double maxY = 8;
+            
+            double rangeX = maxX - minX;
+            double rangeY = maxY - minY;
+            
+            double sample = rand.NextDouble();
+            double scaled = (sample * rangeX) + minX;
+            double x = scaled;
+
+            sample = rand.NextDouble();
+            scaled = (sample * rangeY) + minY;
+            double y = scaled;
+
+            x = Math.Truncate(x * 10) / 10;
+            y = Math.Truncate(y * 10) / 10;
+
+            PositionInfo pos = new PositionInfo();
+            pos.posX = (float)x;
+            pos.posY = (float)y;
+
+            C_Move movePacket = new C_Move();
+            movePacket.positionInfo = pos;
+            movePacket.speed = float.Parse(input_speed.text);
+
+            NetworkManager.Instance.Send(movePacket.Serialize());
+            NetworkManager.Instance.sNow();
+
+            int val = rand.Next(2, 5);
+
+            yield return new WaitForSeconds(val);
+        }
     }
 }

@@ -50,8 +50,13 @@ public class PacketHandler
 		if (go == null)
 			return;
 
-		go.GetComponent<Player>().des = new Vector2(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
-		// go.transform.position = new Vector3(movePacket.positionInfo.posX, movePacket.positionInfo.posY, 0);
+		//go.GetComponent<Player>().des = new Vector2(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
+
+		NetworkManager.Instance.eNow();
+		NetworkManager.Instance.dsec = NetworkManager.Instance.esec - NetworkManager.Instance.ssec;
+		NetworkManager.Instance.ssec = NetworkManager.Instance.esec;
+
+		go.GetComponent<Player>().Print(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
 	}
 
 	public void S_HitAction(Session session, IPacket packet)

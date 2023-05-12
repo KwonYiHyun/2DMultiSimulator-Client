@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,9 @@ public class Player : MonoBehaviour
         
     }
 
-    
-    void Update()
+    public void Print(float x, float y)
     {
-        transform.position = Vector2.Lerp(transform.position, des, 0.04f);
+        Debug.Log("x = " + x + " / y = " + y);
+        transform.position = new Vector2(x, y);
     }
 }
