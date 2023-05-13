@@ -9,7 +9,8 @@ public class PacketHandler
 {
     public void S_ConnectAction(Session session, IPacket packet)
     {
-		
+		S_Connect connectPacket = packet as S_Connect;
+		NetworkManager.Instance.playerId = connectPacket.id;
     }
 
 	public void S_StartGameAction(Session session, IPacket packet)
@@ -25,7 +26,14 @@ public class PacketHandler
 
 	public void S_LeaveGameAction(Session session, IPacket packet)
 	{
+		S_LeaveGame leavePacket = packet as S_LeaveGame;
 
+		GameObject go;
+
+		if (NetworkManager.Instance.objManager._objects.TryGetValue(leavePacket.objectId, out go))
+        {
+			NetworkManager.Instance.LeavePlayer(go);
+        }
 	}
 
 	public void S_SpawnAction(Session session, IPacket packet)
@@ -45,16 +53,19 @@ public class PacketHandler
 	public void S_MoveAction(Session session, IPacket packet)
 	{
 		S_Move movePacket = packet as S_Move;
+		
 
 		GameObject go = NetworkManager.Instance.objManager.FindById(movePacket.objectId);
 		if (go == null)
 			return;
 
-		//go.GetComponent<Player>().des = new Vector2(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
+		if (movePacket.objectId == NetworkManager.Instance.playerId)
+        {
+			NetworkManager.Instance.eNow();
+			NetworkManager.Instance.dsec = NetworkManager.Instance.esec - NetworkManager.Instance.ssec;
+			NetworkManager.Instance.sNow();
+		}
 
-		NetworkManager.Instance.eNow();
-		NetworkManager.Instance.dsec = NetworkManager.Instance.esec - NetworkManager.Instance.ssec;
-		NetworkManager.Instance.ssec = NetworkManager.Instance.esec;
 
 		go.GetComponent<Player>().Print(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
 	}

@@ -18,6 +18,7 @@ public class NetworkManager : MonoBehaviour
     public ObjectManager objManager = new ObjectManager();
 
     public int ssec = 0, esec = 0, dsec = 0;
+    public int playerId;
 
     private void Awake()
     {
@@ -56,7 +57,7 @@ public class NetworkManager : MonoBehaviour
         IPEndPoint endPoint = new IPEndPoint(ipAddr, 7777);
         */
         IPAddress ipA = IPAddress.Parse("127.0.0.1");
-        IPEndPoint endPoint = new IPEndPoint(ipA, 8877);
+        IPEndPoint endPoint = new IPEndPoint(ipA, 7777);
         Connector connector = new Connector();
 
         connector.init(endPoint);
@@ -73,11 +74,16 @@ public class NetworkManager : MonoBehaviour
 
     public int sNow()
     {
-        return ssec = int.Parse(DateTime.Now.ToString("fff"));
+        return ssec = Environment.TickCount;
     }
 
     public int eNow()
     {
-        return esec = int.Parse(DateTime.Now.ToString("fff"));
+        return esec = Environment.TickCount;
+    }
+
+    public void LeavePlayer(GameObject obj)
+    {
+        Destroy(obj);
     }
 }

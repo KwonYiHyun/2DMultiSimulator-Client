@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ObjectManager
 {
-	Dictionary<int, GameObject> _objects = new Dictionary<int, GameObject>();
+	public Dictionary<int, GameObject> _objects = new Dictionary<int, GameObject>();
 
 	public static GameObjectType GetObjectTypeById(int id)
 	{

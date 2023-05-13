@@ -7,10 +7,6 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public TMP_InputField input_posX;
-    public TMP_InputField input_posY;
-    public TMP_InputField input_speed;
-
     public TMP_Text frame;
 
     void Start()
@@ -25,19 +21,6 @@ public class UIManager : MonoBehaviour
 
     public void SendTo()
     {
-        //PositionInfo pos = new PositionInfo();
-        //pos.posX = float.Parse(input_posX.text);
-        //pos.posY = float.Parse(input_posY.text);
-
-        //C_Move movePacket = new C_Move();
-        //movePacket.positionInfo = pos;
-        //movePacket.speed = float.Parse(input_speed.text);
-
-        //NetworkManager.Instance.Send(movePacket.Serialize());
-        //NetworkManager.Instance.sNow();
-
-        // player.GetComponent<Player>().des = new Vector2(movePacket.positionInfo.posX, movePacket.positionInfo.posY);
-
         StartCoroutine("Send");
     }
 
@@ -72,10 +55,9 @@ public class UIManager : MonoBehaviour
 
             C_Move movePacket = new C_Move();
             movePacket.positionInfo = pos;
-            movePacket.speed = float.Parse(input_speed.text);
 
-            NetworkManager.Instance.Send(movePacket.Serialize());
             NetworkManager.Instance.sNow();
+            NetworkManager.Instance.Send(movePacket.Serialize());
 
             int val = rand.Next(2, 5);
 
